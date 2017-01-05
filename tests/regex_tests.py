@@ -12,19 +12,20 @@ from logcolor import regex
 
 class TestRegexes(TestCase):
 
-    def test_url_re(self):
-        """Test matching basic urls"""
+    def test_color_re(self):
+        """Test matching basic values"""
         good_vals = (
-            "%m<magenta>",
-            "%b<blue>",
-            "%g<green>",
-            "%y<yellow>",
-            "%c<cyan>",
-            "%w<white>",
+            "#m<magenta>",
+            "#b<blue>",
+            "#g<green>",
+            "#y<yellow>",
+            "#c<cyan>",
+            "#w<white>",
         )
         bad_vals = (
             "Some text",
-            "%f<fuscia>",
+            "#f<fuscia>",
+            "#m[magenta]",
         )
         for good_val in good_vals:
             self.assertIsNotNone(regex.COLOR_EXP.match(good_val))
@@ -35,10 +36,12 @@ class TestRegexes(TestCase):
     def test_color_extract(self):
         """Make sure regular expression catches all instances on findall"""
         text = (
-            "This text has some very colourful words in it like: %m<magenta>, "
-            " %b<blue>,  %g<green>,  %y<yellow>,  %c<cyan>, and %w<white>"
+            "This text has some very colourful words in it like: #m<magenta>, "
+            " #b<blue>,  #g<green>,  #y<yellow>,  #c<cyan>, and #w<wh\nite>"
         )
-        for item in ("%m<magenta>", "%b<blue>",
-                     "%g<green>", "%y<yellow>", "%c<cyan>", "%w<white>"):
+        vals = regex.COLOR_EXP.findall(text)
 
-            self.assertTrue(item in regex.COLOR_EXP.findall(text))
+        for item in ("#m<magenta>", "#b<blue>",
+                     "#g<green>", "#y<yellow>", "#c<cyan>", "#w<wh\nite>"):
+            if item not in vals:
+                raise AssertionError("{0} was not detected".format(item))

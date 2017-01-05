@@ -3,7 +3,7 @@
 
 Welcome to Log Color's documentation!
 =====================================
-Simple formatters with a basic syntax for nicely colored log outputs.
+Simple formatters with a basic markup for nicely colored log outputs.
 
 Contents:
 
@@ -11,6 +11,7 @@ Contents:
    :maxdepth: 2
 
    topics/introduction
+   topics/usage
    changelog
 
 Indices and tables

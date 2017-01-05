@@ -23,7 +23,7 @@ class ColorStripper(logging.Formatter):
         return logging.Formatter.format(self, record)
 
 
-class ColoredFormatter(logging.Formatter):
+class ColorFormatter(logging.Formatter):
     """
     Adds in color sequences for logging messages. They are to be provided in
     the format: #y<message> which will be formatted as yellow. The colors
