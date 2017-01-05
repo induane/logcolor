@@ -35,7 +35,7 @@ class TestRegexes(TestCase):
     def test_color_extract(self):
         """Make sure regular expression catches all instances on findall"""
         text = (
-            "This text has some very colourful words in it liie: %m<magenta>, "
+            "This text has some very colourful words in it like: %m<magenta>, "
             " %b<blue>,  %g<green>,  %y<yellow>,  %c<cyan>, and %w<white>"
         )
         for item in ("%m<magenta>", "%b<blue>",

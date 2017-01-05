@@ -7,4 +7,4 @@ Precompiled regular expressions used by the logcolor module
 import re
 
 
-COLOR_EXP = re.compile(r'%[mbcgyrw]<[^<>]+>')
+COLOR_EXP = re.compile(r'#[mbcgyrw]<.+?>', re.DOTALL)
