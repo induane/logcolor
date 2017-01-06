@@ -41,6 +41,9 @@ docs: build_reqs
 	$(IN_ENV) pip install -r docs/requirements.txt
 	$(IN_ENV) $(MAKE) -C docs html
 
+publish: artifacts
+	$(IN_ENV) twine upload dist/*
+
 freeze: env
 	- $(IN_ENV) pip freeze
 
