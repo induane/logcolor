@@ -5,7 +5,7 @@ to emphasize certain salient pieces of information or to otherwise enhance the
 user experience. Unfortunately it's quite cumbersome to add colorized outputs
 to Python log messages.
 
-![example](https://raw.github.com/induane/logcolor/master/docs/source/images/example.png)
+![example](https://raw.github.com/induane/logcolor/master/docs/source/images/example_logs.png)
 
 ## Installation
 I'm on pypi!::
