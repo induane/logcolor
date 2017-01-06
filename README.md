@@ -7,7 +7,12 @@ to Python log messages.
 
 ![example](https://raw.github.com/induane/logcolor/master/docs/source/images/example.png)
 
-Goals:
+## Installation
+I'm on pypi!::
+
+    pip install log_color
+
+## Goals
 
 - Simple to use
 - No external dependencies
