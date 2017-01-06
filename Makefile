@@ -13,7 +13,7 @@ all: test lint docs artifacts
 env: $(ENV_DIR)
 
 test: build
-	$(IN_ENV) nosetests -v --with-xunit --xunit-file=test_results.xml --with-coverage --cover-erase --cover-xml --cover-package logcolor
+	$(IN_ENV) nosetests -v --with-xunit --xunit-file=test_results.xml --with-coverage --cover-erase --cover-xml --cover-package log_color
 
 artifacts: build_reqs sdist wheel
 

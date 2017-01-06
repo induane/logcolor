@@ -19,6 +19,6 @@ class TestImports(TestCase):
     def test_import_color_formatter(self):
         """Test importing ColorFormatter"""
         try:
-            from logcolor import ColorFormatter  # noqa
+            from log_color import ColorFormatter  # noqa
         except ImportError:
             raise AssertionError("Unable to import ColorFormatter from module")
