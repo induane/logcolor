@@ -15,19 +15,22 @@ env: $(ENV_DIR)
 test: build
 	$(IN_ENV) nosetests -v --with-xunit --xunit-file=test_results.xml --with-coverage --cover-erase --cover-xml --cover-package logcolor
 
-artifacts: build_reqs rpm sdist
+artifacts: build_reqs sdist wheel
 
 $(ENV_DIR):
 	virtualenv -p $(PYTHON) $(ENV_DIR)
 
 build_reqs: env
-	$(IN_ENV) pip install sphinx pep8 coverage nose
+	$(IN_ENV) pip install sphinx pep8 coverage nose wheel
 
 build: build_reqs
 	$(IN_ENV) pip install --editable .
 
 sdist: build_reqs
 	$(IN_ENV) python setup.py sdist
+
+wheel: build_reqs
+	$(IN_ENV) python setup.py bdist_wheel
 
 lint: pep8
 
