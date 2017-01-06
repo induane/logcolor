@@ -1,6 +1,16 @@
 Changelog
 =========
 
+1.0.2
+-----
+- Updated README.md with a nice picture
+- Added publish option to Makefile
+- Fixed an import and coverage package name
+
+1.0.1
+-----
+- Added licence information
+
 1.0.0
 -----
 - Base loggers implemented

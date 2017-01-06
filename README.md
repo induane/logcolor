@@ -17,6 +17,9 @@ I'm on pypi!::
 - Simple to use
 - No external dependencies
 
+## Documentation
+Check out documentation on readthedocs: http://log-color.readthedocs.io/en/latest/
+
 ## Makefile
 
 This project uses a Makefile for various tasks. Some of the available tasks
