@@ -19,10 +19,10 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'logcolor'
+project = u'log_color'
 copyright = u'2017 - %s, Brant Watson' % datetime.datetime.now().year
 
-version = '1.0.1'
+version = '1.0.2'
 # The full version, including alpha/beta/rc tags.
 release = '0'
 

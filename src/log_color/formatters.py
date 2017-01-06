@@ -5,8 +5,8 @@ Custom Formatters
 # Standard
 import logging
 
-from logcolor import colors
-from logcolor.regex import COLOR_EXP
+from log_color import colors
+from log_color.regex import COLOR_EXP
 
 
 class ColorStripper(logging.Formatter):

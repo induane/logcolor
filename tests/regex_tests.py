@@ -7,7 +7,7 @@ Tests of regular expressions
 from unittest import TestCase
 
 # Project
-from logcolor import regex
+from log_color import regex
 
 
 class TestRegexes(TestCase):

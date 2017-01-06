@@ -1,4 +1,4 @@
-from logcolor.formatters import (
+from log_color.formatters import (
     ColorFormatter,
     ColorStripper,
 )

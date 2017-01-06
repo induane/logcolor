@@ -9,8 +9,8 @@ from StringIO import StringIO
 from unittest import TestCase
 
 # Project
-from logcolor import colors
-from logcolor.formatters import (
+from log_color import colors
+from log_color.formatters import (
     ColorFormatter,
     ColorStripper,
 )

@@ -2,7 +2,7 @@
 from unittest import TestCase
 
 # Project
-from logcolor import colors
+from log_color import colors
 
 
 class TestColorModule(TestCase):

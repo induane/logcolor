@@ -21,7 +21,7 @@ $(ENV_DIR):
 	virtualenv -p $(PYTHON) $(ENV_DIR)
 
 build_reqs: env
-	$(IN_ENV) pip install sphinx pep8 coverage nose wheel
+	$(IN_ENV) pip install sphinx pep8 coverage nose wheel twine
 
 build: build_reqs
 	$(IN_ENV) pip install --editable .

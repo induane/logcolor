@@ -6,7 +6,7 @@ other log formatter.
 Simple Example::
 
     import logging
-    from logcolor import ColorFormatter
+    from log_color import ColorFormatter
     handler = logging.StreamHandler()
     formatter = ColorFormatter("%(levelname)s: %(message)s")
     handler.setFormatter(formatter)
@@ -20,7 +20,7 @@ Handy DictConfig (that also uses the ColorStripper formatter for a file
 handler)::
 
     from logging.config import dictConfig
-    from logcolor import ColorFormatter, ColorStripper
+    from log_color import ColorFormatter, ColorStripper
 
     BASE_CONFIG = {
         'version': 1,

@@ -12,7 +12,7 @@ class TestImports(TestCase):
     def test_import_color_stripper(self):
         """Test importing ColorStripper"""
         try:
-            from logcolor import ColorStripper  # noqa
+            from log_color import ColorStripper  # noqa
         except ImportError:
             raise AssertionError("Unable to import ColorStripper from module")
 
