@@ -33,7 +33,7 @@ class ColorStr(unicode):
     def __init__(self, *args, **kwargs):
         super(ColorStr, self).__init__()
 
-    def __new__(cls, value, color, force_seq=False, *args, **kwargs):
+    def __new__(cls, value, color, force_seq=None, *args, **kwargs):
         if cls.color_supported(force_seq=force_seq):
             return unicode.__new__(cls, u"{0}{1}{2}".format(
                 color,
