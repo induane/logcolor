@@ -20,9 +20,9 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'logcolor'
-copyright = u'2015 - %s, Brant Watson' % datetime.datetime.now().year
+copyright = u'2017 - %s, Brant Watson' % datetime.datetime.now().year
 
-version = '1.0.0'
+version = '1.0.1'
 # The full version, including alpha/beta/rc tags.
 release = '0'
 
