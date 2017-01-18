@@ -18,6 +18,7 @@ $ pip install log_color
 
 - Simple to use
 - No external dependencies
+- Python 2 & 3 compatibility
 
 ## Documentation
 Check out documentation on readthedocs: http://log-color.readthedocs.io/en/latest/
