@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0.3
+-----
+- Improved cross platform testing with tox
+- Added base test assertions for use in multiple
+  versions of Python
+
 1.0.2
 -----
 - Updated README.md with a nice picture

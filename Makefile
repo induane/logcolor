@@ -1,6 +1,4 @@
-PYTHON=python2.7
-
-ENV_DIR=.env_$(PYTHON)
+ENV_DIR=.env
 
 ifeq ($(OS),Windows_NT)
 	IN_ENV=. $(ENV_DIR)/Scripts/activate &&
@@ -13,15 +11,15 @@ all: test lint docs artifacts
 env: $(ENV_DIR)
 
 test: build
-	$(IN_ENV) nosetests -v --with-xunit --xunit-file=test_results.xml --with-coverage --cover-erase --cover-xml --cover-package log_color
+	$(IN_ENV) tox
 
 artifacts: build_reqs sdist wheel
 
 $(ENV_DIR):
-	virtualenv -p $(PYTHON) $(ENV_DIR)
+	virtualenv -p python $(ENV_DIR)
 
 build_reqs: env
-	$(IN_ENV) pip install sphinx pep8 coverage nose wheel twine
+	$(IN_ENV) pip install sphinx pep8 coverage nose wheel twine tox
 
 build: build_reqs
 	$(IN_ENV) pip install --editable .
@@ -65,9 +63,9 @@ clean:
 	- find -name '*.pyc' -delete
 	- find -name '*.pyo' -delete
 	- find -name '*.pyd' -delete
+	- find -name '*__pycache__*' -delete
 
 env_clean: clean
-	- @rm -rf .env
-	- @rm -rf .env_python2.6
+	- @rm -rf .env*
 	- @rm -rf $(ENV_DIR)
 	- @rm -rf .tox
