@@ -3,8 +3,8 @@ Regex Tests
 ===========
 Tests of regular expressions
 """
-# Standard
-from unittest import TestCase
+# Test Module
+from . import TestCase
 
 # Project
 from log_color import regex

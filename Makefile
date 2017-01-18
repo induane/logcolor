@@ -70,3 +70,4 @@ env_clean: clean
 	- @rm -rf .env
 	- @rm -rf .env_python2.6
 	- @rm -rf $(ENV_DIR)
+	- @rm -rf .tox

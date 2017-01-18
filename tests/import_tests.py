@@ -3,8 +3,8 @@ Import Tests
 ============
 Make sure imports work as expected
 """
-# Standard
-from unittest import TestCase
+# Test Module
+from . import TestCase
 
 
 class TestImports(TestCase):

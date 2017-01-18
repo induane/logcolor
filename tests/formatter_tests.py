@@ -5,8 +5,10 @@ Make sure formatters function as expected
 """
 # Standard
 import logging
-from StringIO import StringIO
-from unittest import TestCase
+from io import StringIO
+
+# Test Module
+from . import TestCase
 
 # Project
 from log_color import colors
