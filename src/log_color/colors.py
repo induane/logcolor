@@ -58,6 +58,9 @@ class ColorStr(text_type):
         # Assume supported, ignore autodetection; this is useful for testing
         if force_seq is True:
             return True
+
+
+        # Assume unsupported, ignore autodetection; this is useful for testing
         if force_seq is False:
             return False
 
