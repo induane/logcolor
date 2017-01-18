@@ -1,7 +1,7 @@
 """
 Regex
 -----
-Precompiled regular expressions used by the logcolor module
+Precompiled regular expressions used by the log_color module
 """
 # Standard
 import re

@@ -49,21 +49,17 @@ class ColorStr(text_type):
                 value,
                 COLOR_END
             ))
-        else:
-            return text_type.__new__(cls, value)
+        return text_type.__new__(cls, value)
 
     @staticmethod
     def color_supported(force_seq=None):
         """Shoddy detection for color support"""
-        # Assume supported, ignore autodetection; this is useful for testing
-        if force_seq is True:
-            return True
+        # If True or False, override autodetection and return. Using "or" here
+        # is slightly faster than in (True, False, ) as it short circuits
+        if force_seq is False or force_seq is True:
+            return force_seq
 
-        # Assume unsupported, ignore autodetection; this is useful for testing
-        if force_seq is False:
-            return False
-
-        # If force_seq is None, go on to autodetection
+        # Attempt on to autodetection
         if (
             (hasattr(sys.stderr, "isatty") and sys.stderr.isatty()) or
             ('TERM' in os.environ and os.environ['TERM'] == 'ANSI')
