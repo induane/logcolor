@@ -5,6 +5,15 @@ import os
 import sys
 import platform
 
+# Python2/3 compat
+if sys.version_info[0] == 3:
+    text_type = str
+    binary_type = bytes
+else:
+    text_type = unicode
+    binary_type = str
+
+
 COLOR_MAP = {
     'b': u'\033[94m',
     'c': u'\033[96m',
@@ -17,7 +26,7 @@ COLOR_MAP = {
 
 COLOR_END = '\033[0m'
 # Assemble list of all color sequences
-ALL_SEQ = [x for x in COLOR_MAP.values()] + [COLOR_END, ]
+ALL_SEQ = frozenset([x for x in COLOR_MAP.values()] + [COLOR_END, ])
 
 
 def strip_color(value):
@@ -27,7 +36,7 @@ def strip_color(value):
     return value
 
 
-class ColorStr(unicode):
+class ColorStr(text_type):
     """Subclasses string to include ascii color"""
 
     def __init__(self, *args, **kwargs):
@@ -35,13 +44,13 @@ class ColorStr(unicode):
 
     def __new__(cls, value, color, force_seq=None, *args, **kwargs):
         if cls.color_supported(force_seq=force_seq):
-            return unicode.__new__(cls, u"{0}{1}{2}".format(
+            return text_type.__new__(cls, u"{0}{1}{2}".format(
                 color,
                 value,
                 COLOR_END
             ))
         else:
-            return unicode.__new__(cls, value)
+            return text_type.__new__(cls, value)
 
     @staticmethod
     def color_supported(force_seq=None):

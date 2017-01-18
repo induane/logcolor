@@ -8,9 +8,11 @@ to Python log messages.
 ![example](https://raw.githubusercontent.com/induane/logcolor/master/docs/source/images/example_logs.png)
 
 ## Installation
-I'm on pypi!::
+I'm on pypi!
 
-    pip install log_color
+```
+$ pip install log_color
+```
 
 ## Goals
 
