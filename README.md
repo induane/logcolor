@@ -1,5 +1,7 @@
 # ColorFormatter
 
+<a href="https://pypi.python.org/pypi/log-color"><img src="https://img.shields.io/pypi/v/log_color.svg"></a>
+
 When making command line interfaces, it's often useful to colorize the output
 to emphasize certain salient pieces of information or to otherwise enhance the
 user experience. Unfortunately it's quite cumbersome to add colorized outputs
