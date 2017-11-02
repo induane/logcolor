@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.4
+-----
+- Fixed a bug with logging non text objects
+
 1.0.3
 -----
 - Improved cross platform testing with tox
