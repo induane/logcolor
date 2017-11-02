@@ -6,7 +6,19 @@ Custom Formatters
 import logging
 
 from log_color import colors
+from log_color import compat
 from log_color.regex import COLOR_EXP
+
+
+def _cast_message(message):
+    """Attempt to cast a value as a string if it isn't one."""
+    if isinstance(message, compat.string_types):
+        return message
+    else:
+        try:
+            return compat.text_type(message)
+        except Exception:
+            return message  # Don't fail here but there *could* be problems
 
 
 class ColorStripper(logging.Formatter):
@@ -16,10 +28,12 @@ class ColorStripper(logging.Formatter):
     desired.
     """
     def format(self, record):
-        # Strip any color sequences
-        record.msg = colors.strip_color(record.msg)
+        """Format the message."""
+        message = _cast_message(record.msg)
+        message = colors.strip_color(message)
         for val in COLOR_EXP.findall(record.msg):
-            record.msg = record.msg.replace(val, val[3:-1])
+            message = message.replace(val, val[3:-1])
+        record.msg = message
         return logging.Formatter.format(self, record)
 
 
@@ -38,10 +52,12 @@ class ColorFormatter(logging.Formatter):
     - w (white)
     """
     def format(self, record):
-        # Determine color replacements
-        for val in COLOR_EXP.findall(record.msg):
-            record.msg = record.msg.replace(
+        """Format the message."""
+        message = _cast_message(record.msg)
+        for val in COLOR_EXP.findall(message):
+            message = message.replace(
                 val,
                 colors.ColorStr(val[3:-1], colors.COLOR_MAP[val[1]])
             )
+        record.msg = message
         return logging.Formatter.format(self, record)

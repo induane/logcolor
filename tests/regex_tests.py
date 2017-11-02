@@ -1,8 +1,5 @@
-"""
-Regex Tests
-===========
-Tests of regular expressions
-"""
+"""Regex Tests."""
+
 # Test Module
 from . import TestCase
 

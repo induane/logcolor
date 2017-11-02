@@ -1,8 +1,5 @@
-"""
-LogColor Tests
-==============
-Test module for LogColor and custom TestCase with additional asserts
-"""
+"""LogColor Tests."""
+
 # Standard
 from unittest import TestCase as BaseTestCase
 

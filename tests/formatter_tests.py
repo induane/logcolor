@@ -1,8 +1,5 @@
-"""
-Formatter Tests
-===============
-Make sure formatters function as expected
-"""
+"""Formatter Tests."""
+
 # Standard
 import logging
 from io import StringIO
@@ -33,11 +30,17 @@ class TestColorFormatter(TestCase):
         self.log.addHandler(self.handler)
 
     def test_format_matches(self):
-        """Test format includes expected output"""
-        base_str = "blue"
+        """Test format includes expected output."""
+        base_str = 'blue'
         blue_str = colors.ColorStr(base_str, colors.COLOR_MAP['b'])
-        expected = "INFO: this is {0}\n".format(blue_str)
-        self.log.info("this is #b<{0}>".format(base_str))
+        expected = 'INFO: this is {0}\n'.format(blue_str)
+        self.log.info('this is #b<{0}>'.format(base_str))
+        self.assertEqual(self.stream.getvalue(), expected)
+
+    def test_format_object(self):
+        """Test formatting a non-string object."""
+        expected = 'INFO: {}\n'
+        self.log.info({})
         self.assertEqual(self.stream.getvalue(), expected)
 
 
@@ -56,8 +59,8 @@ class TestColorStripper(TestCase):
         self.log.addHandler(self.handler)
 
     def test_format_matches(self):
-        """Test format includes expected output"""
-        base_str = "blue"
-        expected = "INFO: this is {0}\n".format(base_str)
-        self.log.info("\033[94mthis\033[0m is #b<{0}>".format(base_str))
+        """Test format includes expected output."""
+        base_str = 'blue'
+        expected = 'INFO: this is {0}\n'.format(base_str)
+        self.log.info('\033[94mthis\033[0m is #b<{0}>'.format(base_str))
         self.assertEqual(self.stream.getvalue(), expected)
