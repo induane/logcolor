@@ -17,11 +17,11 @@ I'm on pypi!
 $ pip install log_color
 ```
 
-## Goals
+## Features
 
 - Simple to use
 - No external dependencies
-- Python 2 & 3 compatibility
+- Compatibility with Python2.6, Python 2.7, Python 3.x, PyPy
 
 ## Makefile
 
