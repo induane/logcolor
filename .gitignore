@@ -16,4 +16,4 @@ BUILDROOT
 .env_python2.7
 .env_python2.6
 .tox
-
+.env*
