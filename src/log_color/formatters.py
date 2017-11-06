@@ -1,12 +1,8 @@
-"""
-Custom Formatters
-=================
-"""
+"""Custom Formatters."""
 # Standard
 import logging
 
-from log_color import colors
-from log_color import compat
+from log_color import (colors, compat, )
 from log_color.regex import COLOR_EXP
 
 
@@ -23,9 +19,10 @@ def _cast_message(message):
 
 class ColorStripper(logging.Formatter):
     """
-    Strips all references to colored output from the logging message. This is
-    useful for passing messages to a file logger where color sequences are not
-    desired.
+    Strip references to colored output from message.
+
+    This formatter removes all color code text from a message. For example
+    it would convert ``this #g<is> text`` to ``this is text``.
     """
     def format(self, record):
         """Format the message."""
@@ -39,9 +36,15 @@ class ColorStripper(logging.Formatter):
 
 class ColorFormatter(logging.Formatter):
     """
-    Adds in color sequences for logging messages. They are to be provided in
-    the format: #y<message> which will be formatted as yellow. The colors
-    allowed are:
+    Insert color sequences for logging messages.
+
+    Convert all portions of a message that contain color codes into a ColorStr
+    instance that matches the color map data then re-insert it into the
+    message. On supported platforms this will insert a color codes around the
+    specified text.
+
+    Color sequences should be in the following format: #y<message> which will
+    be formatted as yellow. The colors allowed are:
 
     - m (magenta)
     - b (blue)

@@ -46,13 +46,12 @@ class ColorStr(compat.text_type):
 
     @staticmethod
     def color_supported(force_seq=None):
-        """Shoddy detection for color support"""
-        # If True or False, override autodetection and return. Using "or" here
-        # is slightly faster than in (True, False, ) as it short circuits
+        """Shoddy detection of color support."""
+        # If True or False, override autodetection and return.
         if force_seq is False or force_seq is True:
             return force_seq
 
-        # Attempt on to autodetection
+        # Attempt simple autodetection
         if (
             (hasattr(sys.stderr, "isatty") and sys.stderr.isatty()) or
             ('TERM' in os.environ and os.environ['TERM'] == 'ANSI')
