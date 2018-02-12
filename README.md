@@ -45,3 +45,6 @@ are listed below.
 * `make publish` - publish any artifacts in dist/* using twine
 * `make pep8` - Get a pep8 compliance report about your code
 * `make` - Equivalent to `make test pep8 docs sdist rpm`
+
+## http://no-color.org/
+LogColor honors the ``NO_COLOR`` environment variable.
