@@ -51,6 +51,10 @@ class ColorStr(compat.text_type):
         if force_seq is False or force_seq is True:
             return force_seq
 
+        # Honor NO_COLOR environment variable:
+        if os.environ.get('NO_COLOR', None):
+            return False
+
         # Attempt simple autodetection
         if (
             (hasattr(sys.stderr, "isatty") and sys.stderr.isatty()) or
