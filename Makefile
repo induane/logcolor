@@ -45,6 +45,9 @@ publish: artifacts
 freeze: env
 	- $(IN_ENV) pip freeze
 
+shell: env
+	- $(IN_ENV) python
+
 clean:
 	- @rm -rf BUILD
 	- @rm -rf BUILDROOT

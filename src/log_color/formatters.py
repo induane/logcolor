@@ -53,14 +53,28 @@ class ColorFormatter(logging.Formatter):
     - y (yellow)
     - r (red)
     - w (white)
+
+    - dm (dark magenta)
+    - db (dark blue)
+    - dc (dark cyan)
+    - dg (dark green)
+    - dy (dark yellow)
+    - dr (dark red)
     """
     def format(self, record):
         """Format the message."""
         message = _cast_message(record.msg)
         for val in COLOR_EXP.findall(message):
-            message = message.replace(
-                val,
-                colors.ColorStr(val[3:-1], colors.COLOR_MAP[val[1]])
-            )
+            #  #dr<dark red>
+            if val.startswith("#d"):
+                message = message.replace(
+                    val,
+                    colors.ColorStr(val[4:-1], colors.COLOR_MAP[val[1:3]])
+                )
+            else:
+                message = message.replace(
+                    val,
+                    colors.ColorStr(val[3:-1], colors.COLOR_MAP[val[1]])
+                )
         record.msg = message
         return logging.Formatter.format(self, record)
