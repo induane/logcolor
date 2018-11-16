@@ -29,7 +29,10 @@ class ColorStripper(logging.Formatter):
         message = _cast_message(record.msg)
         message = colors.strip_color(message)
         for val in COLOR_EXP.findall(record.msg):
-            message = message.replace(val, val[3:-1])
+            if val.startswith("#d"):
+                message = message.replace(val, val[4:-1])
+            else:
+                message = message.replace(val, val[3:-1])
         record.msg = message
         return logging.Formatter.format(self, record)
 
@@ -65,7 +68,6 @@ class ColorFormatter(logging.Formatter):
         """Format the message."""
         message = _cast_message(record.msg)
         for val in COLOR_EXP.findall(message):
-            #  #dr<dark red>
             if val.startswith("#d"):
                 message = message.replace(
                     val,
