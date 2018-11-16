@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.0.6
+-----
+- Added support for darker colors
+
+1.0.5
+-----
+- Honor the NO_COLOR environment variable
+
 1.0.4
 -----
 - Fixed a bug with logging non text objects

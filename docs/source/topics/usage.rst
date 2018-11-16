@@ -42,6 +42,13 @@ sufficient for most purposes.
 - ``r``\ —``#b<red>``
 - ``w``\ —``#b<white>``
 - ``y``\ —``#b<yellow>``
+- ``db``\ —``#b<dark-blue>``
+- ``dc``\ —``#b<dark-cyan>``
+- ``dg``\ —``#b<dark-green>``
+- ``dm``\ —``#b<dark-maroon>``
+- ``dr``\ —``#b<dark-red>``
+- ``dy``\ —``#b<dark-yellow>``
+
 
 Color Stripping
 ^^^^^^^^^^^^^^^
