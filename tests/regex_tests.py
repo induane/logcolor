@@ -18,6 +18,12 @@ class TestRegexes(TestCase):
             "#y<yellow>",
             "#c<cyan>",
             "#w<white>",
+            "#db<darkblue>",
+            "#dc<darkcyan>",
+            "#dg<darkgreen>",
+            "#dm<darkmagenta>",
+            "#dr<darkred>",
+            "#dy<darkyellow>",
         )
         bad_vals = (
             "Some text",
