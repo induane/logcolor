@@ -2,7 +2,10 @@
 # Standard
 import logging
 
-from log_color import (colors, compat, )
+from log_color import (
+    colors,
+    compat,
+)
 from log_color.regex import COLOR_EXP
 
 
@@ -24,6 +27,7 @@ class ColorStripper(logging.Formatter):
     This formatter removes all color code text from a message. For example
     it would convert ``this #g<is> text`` to ``this is text``.
     """
+
     def format(self, record):
         """Format the message."""
         message = _cast_message(record.msg)
@@ -64,19 +68,14 @@ class ColorFormatter(logging.Formatter):
     - dy (dark yellow)
     - dr (dark red)
     """
+
     def format(self, record):
         """Format the message."""
         message = _cast_message(record.msg)
         for val in COLOR_EXP.findall(message):
             if val.startswith("#d"):
-                message = message.replace(
-                    val,
-                    colors.ColorStr(val[4:-1], colors.COLOR_MAP[val[1:3]])
-                )
+                message = message.replace(val, colors.ColorStr(val[4:-1], colors.COLOR_MAP[val[1:3]]))
             else:
-                message = message.replace(
-                    val,
-                    colors.ColorStr(val[3:-1], colors.COLOR_MAP[val[1]])
-                )
+                message = message.replace(val, colors.ColorStr(val[3:-1], colors.COLOR_MAP[val[1]]))
         record.msg = message
         return logging.Formatter.format(self, record)

@@ -8,7 +8,6 @@ from log_color import regex
 
 
 class TestRegexes(TestCase):
-
     def test_color_re(self):
         """Test matching basic values"""
         good_vals = (
@@ -44,7 +43,6 @@ class TestRegexes(TestCase):
         )
         vals = regex.COLOR_EXP.findall(text)
 
-        for item in ("#m<magenta>", "#b<blue>",
-                     "#g<green>", "#y<yellow>", "#c<cyan>", "#w<wh\nite>"):
+        for item in ("#m<magenta>", "#b<blue>", "#g<green>", "#y<yellow>", "#c<cyan>", "#w<wh\nite>"):
             if item not in vals:
                 raise AssertionError("{0} was not detected".format(item))

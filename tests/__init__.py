@@ -5,7 +5,6 @@ from unittest import TestCase as BaseTestCase
 
 
 class TestCase(BaseTestCase):
-
     def assertIn(self, item, collection, msg=None):
         self.assertTrue(item in collection, msg)
 

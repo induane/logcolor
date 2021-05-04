@@ -13,7 +13,7 @@ setup(
     version="1.0.6",
     url="https://github.com/induane/logcolor",
     license="wtfpl",
-    packages=find_packages('src'),
+    packages=find_packages("src"),
     package_dir={"": "src"},
     install_requires=INSTALL_REQUIRES,
     tests_require=TESTS_REQUIRE,

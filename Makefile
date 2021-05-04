@@ -6,36 +6,37 @@ else
 	IN_ENV=. $(ENV_DIR)/bin/activate &&
 endif
 
-all: test lint docs artifacts
+all: test format-code docs artifacts
 
 env: $(ENV_DIR)
 
-test: build
+test: build check-code
 	$(IN_ENV) tox
 
-artifacts: build_reqs sdist wheel
+artifacts: build-reqs sdist wheel
 
 $(ENV_DIR):
-	virtualenv -p python $(ENV_DIR)
+	virtualenv -p python3 $(ENV_DIR)
 
-build_reqs: env
-	$(IN_ENV) pip install sphinx pep8 coverage nose wheel twine tox
+build-reqs: env
+	$(IN_ENV) pip install sphinx black coverage wheel twine tox
 
-build: build_reqs
+build: build-reqs
 	$(IN_ENV) pip install --editable .
 
-sdist: build_reqs
+sdist: build-reqs
 	$(IN_ENV) python setup.py sdist
 
-wheel: build_reqs
+wheel: build-reqs
 	$(IN_ENV) python setup.py bdist_wheel
 
-lint: pep8
+format-code:
+	$(IN_ENV) black -l 119 src/ tests/ setup.py
 
-pep8: build_reqs
-	- $(IN_ENV) pep8 src/logcolor > pep8.out
+check-code:
+	$(IN_ENV) black --check -l 119 src/ tests/ setup.py
 
-docs: build_reqs
+docs: build-reqs
 	$(IN_ENV) pip install -r docs/requirements.txt
 	$(IN_ENV) $(MAKE) -C docs html
 
@@ -63,12 +64,15 @@ clean:
 	- @rm -f coverage.xml
 	- @rm -f tests/coverage.xml
 	- @rm -f pep8.out
-	- find -name '*.pyc' -delete
-	- find -name '*.pyo' -delete
-	- find -name '*.pyd' -delete
-	- find -name '*__pycache__*' -delete
+	- @find . -name '*.orig' -delete
+	- @find . -name '*.DS_Store' -delete
+	- @find . -name '*.pyc' -delete
+	- @find . -name '*.pyd' -delete
+	- @find . -name '*.pyo' -delete
+	- @find . -name '*__pycache__*' -delete
 
-env_clean: clean
+env-clean: clean
 	- @rm -rf .env*
+	- @git clean -dfX
 	- @rm -rf $(ENV_DIR)
 	- @rm -rf .tox

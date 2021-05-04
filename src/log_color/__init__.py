@@ -5,6 +5,6 @@ from log_color.formatters import (
 
 
 __all__ = (
-    'ColorFormatter',
-    'ColorStripper',
+    "ColorFormatter",
+    "ColorStripper",
 )
