@@ -11,6 +11,8 @@ Changelog
 - Simplified code formatting logic
 - Some minor documentation updates
 - WARNING: This is the last release that will support Python 2.x
+- Updated ``setup.py`` metadata to indicate which versions of Python are
+  supported by ``log_color``
 
 1.0.6
 -----
