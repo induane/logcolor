@@ -1,6 +1,17 @@
 Changelog
 =========
 
+1.0.7
+-----
+- Added automatic code formatting with ``black``
+- Dropped support for Python 2.6
+- Use vanilla python -m unittest instead of third party testrunner ``nosetests``
+  because it is no longer maintained and it's simpler to not have a third
+  party test runner in use
+- Simplified code formatting logic
+- Some minor documentation updates
+- WARNING: This is the last release that will support Python 2.x
+
 1.0.6
 -----
 - Added support for darker colors

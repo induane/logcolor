@@ -1,10 +1,13 @@
+.idea/*
+\#*\#
+*~
 .coverage
 coverage.xml
 docs/build/
 pep8.out
 test_results.xml
-*.pyc
-*.pyo
+__pycache__/
+*.py[cod]
 build/*
 dist/*
 *egg-info*
@@ -13,7 +16,6 @@ SOURCES
 BUILDROOT
 .vagrant
 .env
-.env_python2.7
-.env_python2.6
+.env_*
 .tox
 .env*

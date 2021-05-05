@@ -26,9 +26,14 @@ text would appear in the terminals default color::
 Here is a more complete example of a log message with colored text; in this
 example, the *path* substring would be colored green::
 
-    LOG.debug("Processing asset #g<{0}>".format(path))
+    LOG.debug("Processing asset #g<{}>".format(path))
 
-In the above example the *path* would be printed as green text to the console.
+The same example but with Python3-only f-strings::
+
+    LOG.debug(f"Processing asset #g<{path}>")
+
+In the above examples the value of the variable *path* would be printed as
+green text to the console.
 
 Supported Colors
 ^^^^^^^^^^^^^^^^
@@ -126,3 +131,31 @@ handler)::
         }
     }
     dictConfig(BASE_CONFIG)
+
+
+Troubleshooting
+---------------
+
+Output Not Colorized
+^^^^^^^^^^^^^^^^^^^^
+
+There are a couple of things to check for:
+
+1. If you're running on Windows, colorized output is *not* supported.
+2. If you're in a *nix terminal and ANSI color codes are supported but you're not
+   seeing colorized output, check for the ``NO_COLOR`` environment variable. See
+   `no-color.org <http://no-color.org/>`_ for more information on this standard.
+   If the ``NO_COLOR`` environment variable is set, colorized output is
+   automatically suppressed.
+3. Something else: It could be the case that the detection scheme that
+   ``log_color`` ships is failing to detect that your particular terminal
+   supports ANSI color codes. Detection of color support could be offloaded to
+   a third party library, but one of the goals of ``log_color`` is to have no
+   dependencies. Color support detection isn't standardized and most libraries
+   that do color support detection employ reaching out to ncurses or including
+   a huge array of information about very specific (and often obscure)
+   terminals. I'm willing to include support for specific terminals if someone
+   wishes to add them, but I'm not going to default to doing all of that work
+   if no one is using them anyway. Color detection support can be found in
+   ``src/log_color/colors.py`` in the ColorStr class. The ``color_supported``
+   method handles detection so feel free to add it there.
