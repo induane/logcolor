@@ -1,8 +1,8 @@
-# Test Module
-from . import TestCase
-
 # Project
 from log_color import colors
+
+# Test Module
+from tests.custom_asserts import TestCase
 
 
 class TestColorModule(TestCase):

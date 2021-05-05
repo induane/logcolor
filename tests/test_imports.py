@@ -1,7 +1,5 @@
-"""Import Tests."""
-
 # Test Module
-from . import TestCase
+from tests.custom_asserts import TestCase
 
 
 class TestImports(TestCase):

@@ -1,23 +1,10 @@
-"""Custom Formatters."""
 # Standard
 import logging
 
-from log_color import (
-    colors,
-    compat,
-)
+# Project
+from log_color import colors
 from log_color.regex import COLOR_EXP
-
-
-def _cast_message(message):
-    """Attempt to cast a value as a string if it isn't one."""
-    if isinstance(message, compat.string_types):
-        return message
-    else:
-        try:
-            return compat.text_type(message)
-        except Exception:
-            return message  # Don't fail here but there *could* be problems
+from log_color.compat import text_type
 
 
 class ColorStripper(logging.Formatter):
@@ -30,15 +17,14 @@ class ColorStripper(logging.Formatter):
 
     def format(self, record):
         """Format the message."""
-        message = _cast_message(record.msg)
-        message = colors.strip_color(message)
-        for val in COLOR_EXP.findall(record.msg):
+        msg = logging.Formatter.format(self, record)
+        msg = colors.strip_color(msg)
+        for val in COLOR_EXP.findall(msg):
             if val.startswith("#d"):
-                message = message.replace(val, val[4:-1])
+                msg = msg.replace(val, val[4:-1])
             else:
-                message = message.replace(val, val[3:-1])
-        record.msg = message
-        return logging.Formatter.format(self, record)
+                msg = msg.replace(val, val[3:-1])
+        return msg
 
 
 class ColorFormatter(logging.Formatter):
@@ -71,11 +57,10 @@ class ColorFormatter(logging.Formatter):
 
     def format(self, record):
         """Format the message."""
-        message = _cast_message(record.msg)
-        for val in COLOR_EXP.findall(message):
+        msg = logging.Formatter.format(self, record)
+        for val in COLOR_EXP.findall(msg):
             if val.startswith("#d"):
-                message = message.replace(val, colors.ColorStr(val[4:-1], colors.COLOR_MAP[val[1:3]]))
+                msg = msg.replace(val, colors.ColorStr(val[4:-1], colors.COLOR_MAP[val[1:3]]))
             else:
-                message = message.replace(val, colors.ColorStr(val[3:-1], colors.COLOR_MAP[val[1]]))
-        record.msg = message
-        return logging.Formatter.format(self, record)
+                msg = msg.replace(val, colors.ColorStr(val[3:-1], colors.COLOR_MAP[val[1]]))
+        return text_type(msg)

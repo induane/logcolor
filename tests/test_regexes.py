@@ -1,10 +1,8 @@
-"""Regex Tests."""
-
-# Test Module
-from . import TestCase
-
 # Project
 from log_color import regex
+
+# Test Module
+from tests.custom_asserts import TestCase
 
 
 class TestRegexes(TestCase):

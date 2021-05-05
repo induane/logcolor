@@ -1,4 +1,3 @@
-"""Regex."""
 # Standard
 import re
 

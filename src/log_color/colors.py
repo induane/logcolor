@@ -1,10 +1,9 @@
-"""
-Tools for colored terminal output
-"""
+# Standard
 import os
 import sys
 import platform
 
+# Project
 from log_color import compat
 
 COLOR_MAP = {
