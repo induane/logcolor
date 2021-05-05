@@ -30,7 +30,10 @@ $ pip install log_color
 
 - Simple to use
 - No external dependencies
-- Compatibility with Python 2.7, Python 3.x, PyPy
+- Compatibility with Python 2.7, Python 3.3+, PyPy
+
+NOTE: Python ``3.0``, ``3.1``, and ``3.2`` are not supported due to lack of
+support for  ``u""`` style format strings.
 
 ## Makefile
 
