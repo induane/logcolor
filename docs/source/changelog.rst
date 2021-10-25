@@ -8,6 +8,14 @@ Changelog
 - Added ``mypy`` type checking
 - Dropped support for Python2.x
 - Started using support branch pattern
+- Removed compat module (was for Python 2.x compatibility)
+- Removed old-style super calls
+- Use more f-strings
+- Removed custom assertion TestCase class (was for Python 2.x compatibility)
+- Some minor documentation updates
+- Added ``pyproject.toml``
+- Added ``setup.cfg``
+- Added unittest that verifies standard logs can be formatted by passing args
 
 1.0.7
 -----
