@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.1.0
+-----
+- Modernized build system and avoid invoking ``setup.py`` directly
+- Added a ``qt`` Makefile target for quickly invoking the unittest suite
+- Added ``mypy`` type checking
+- Dropped support for Python2.x
+
 1.0.7
 -----
 - Added automatic code formatting with ``black``

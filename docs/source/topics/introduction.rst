@@ -1,5 +1,5 @@
-Introduction
-============
+Development
+===========
 From the project root, you can run the following commands:
 
 * ``make test``: Run unit tests

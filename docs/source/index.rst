@@ -3,15 +3,15 @@
 
 Welcome to Log Color's documentation!
 =====================================
-Simple formatters with a basic markup for nicely colored log outputs.
+The ``log_color`` module provides Python logging formatters with a basic markup syntax for nicely colored log outputs.
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-   topics/introduction
    topics/usage
+   topics/development
    changelog
 
 Indices and tables
