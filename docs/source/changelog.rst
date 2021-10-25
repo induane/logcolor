@@ -1,12 +1,13 @@
 Changelog
 =========
 
-1.1.0
+1.0.8
 -----
 - Modernized build system and avoid invoking ``setup.py`` directly
 - Added a ``qt`` Makefile target for quickly invoking the unittest suite
 - Added ``mypy`` type checking
 - Dropped support for Python2.x
+- Started using support branch pattern
 
 1.0.7
 -----
