@@ -1,5 +1,5 @@
-# Test Module
-from tests.custom_asserts import TestCase
+# Standard
+from unittest import TestCase
 
 
 class TestImports(TestCase):

@@ -1,9 +1,20 @@
-ENV_DIR=.env
+PYTHON=python3
+ENV_DIR=.env_$(PYTHON)
 
 ifeq ($(OS),Windows_NT)
 	IN_ENV=. $(ENV_DIR)/Scripts/activate &&
 else
 	IN_ENV=. $(ENV_DIR)/bin/activate &&
+endif
+
+
+# Some distros need to use pip3 as the entrypoint
+ifneq (, $(shell which pip3))
+PIP_CMD=pip3
+else ifneq (, $(shell which pip))
+PIP_CMD=pip
+else
+$(error "Python's pip not found on $(PATH)")
 endif
 
 all: test format-code docs artifacts
@@ -13,41 +24,48 @@ env: $(ENV_DIR)
 test: build check-code
 	$(IN_ENV) tox
 
+qt:
+	$(IN_ENV) python -m unittest discover --start-directory tests --verbose -b
+
 artifacts: build-reqs sdist wheel
 
 $(ENV_DIR):
 	virtualenv -p python3 $(ENV_DIR)
 
 build-reqs: env
-	$(IN_ENV) pip install sphinx black coverage wheel twine tox
+	$(IN_ENV) $(PIP_CMD) install sphinx black coverage wheel twine tox build setuptools_scm
 
 build: build-reqs
-	$(IN_ENV) pip install --editable .
+	$(IN_ENV) $(PIP_CMD) install --editable .
 
 sdist: build-reqs
-	$(IN_ENV) python setup.py sdist
+	$(IN_ENV) $(PYTHON) -m build --no-isolation --sdist
 
 wheel: build-reqs
-	$(IN_ENV) python setup.py bdist_wheel
+	$(IN_ENV) $(PYTHON) -m build --no-isolation --wheel
 
 format-code:
-	$(IN_ENV) black -l 119 src/ tests/ setup.py
+	$(IN_ENV) black -l 119 src/ tests/ setup.py docs/source/conf.py
 
 check-code:
-	$(IN_ENV) black --check -l 119 src/ tests/ setup.py
+	$(IN_ENV) black --check -l 119 src/ tests/ setup.py docs/source/conf.py
 
 docs: build-reqs
-	$(IN_ENV) pip install -r docs/requirements.txt
+	$(IN_ENV) $(PIP_CMD) install -r docs/requirements.txt
 	$(IN_ENV) $(MAKE) -C docs html
 
 publish: artifacts
 	$(IN_ENV) twine upload dist/*
 
+# Static Analysis
+mypy:
+	$(IN_ENV) mypy --ignore-missing-imports src
+
 freeze: env
 	- $(IN_ENV) pip freeze
 
 shell: env
-	- $(IN_ENV) python
+	- $(IN_ENV) $(PYTHON)
 
 clean:
 	- @rm -rf BUILD

@@ -1,10 +1,10 @@
 # Standard
 import logging
+from logging import LogRecord
 
 # Project
 from log_color import colors
 from log_color.regex import COLOR_EXP
-from log_color.compat import text_type
 
 
 class ColorStripper(logging.Formatter):
@@ -15,9 +15,9 @@ class ColorStripper(logging.Formatter):
     it would convert ``this #g<is> text`` to ``this is text``.
     """
 
-    def format(self, record):
+    def format(self, record: LogRecord) -> str:
         """Format the message."""
-        msg = logging.Formatter.format(self, record)
+        msg = super().format(record)
         msg = colors.strip_color(msg)
         for val in COLOR_EXP.findall(msg):
             if val.startswith("#d"):
@@ -55,12 +55,12 @@ class ColorFormatter(logging.Formatter):
     - dr (dark red)
     """
 
-    def format(self, record):
+    def format(self, record: LogRecord) -> str:
         """Format the message."""
-        msg = logging.Formatter.format(self, record)
+        msg = super().format(record)
         for val in COLOR_EXP.findall(msg):
             if val.startswith("#d"):
                 msg = msg.replace(val, colors.ColorStr(val[4:-1], colors.COLOR_MAP[val[1:3]]))
             else:
                 msg = msg.replace(val, colors.ColorStr(val[3:-1], colors.COLOR_MAP[val[1]]))
-        return text_type(msg)
+        return msg

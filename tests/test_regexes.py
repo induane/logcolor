@@ -1,8 +1,8 @@
+# Standard
+from unittest import TestCase
+
 # Project
 from log_color import regex
-
-# Test Module
-from tests.custom_asserts import TestCase
 
 
 class TestRegexes(TestCase):
@@ -22,11 +22,7 @@ class TestRegexes(TestCase):
             "#dr<darkred>",
             "#dy<darkyellow>",
         )
-        bad_vals = (
-            "Some text",
-            "#f<fuscia>",
-            "#m[magenta]",
-        )
+        bad_vals = ("Some text", "#f<fuscia>", "#m[magenta]")
         for good_val in good_vals:
             self.assertIsNotNone(regex.COLOR_EXP.match(good_val))
 
@@ -43,4 +39,4 @@ class TestRegexes(TestCase):
 
         for item in ("#m<magenta>", "#b<blue>", "#g<green>", "#y<yellow>", "#c<cyan>", "#w<wh\nite>"):
             if item not in vals:
-                raise AssertionError("{0} was not detected".format(item))
+                raise AssertionError(f"{item} was not detected")

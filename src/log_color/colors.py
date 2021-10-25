@@ -2,56 +2,49 @@
 import os
 import sys
 import platform
+from typing import Dict, FrozenSet, Optional
 
-# Project
-from log_color import compat
-
-COLOR_MAP = {
-    "b": u"\033[94m",
-    "c": u"\033[96m",
-    "g": u"\033[92m",
-    "m": u"\033[95m",
-    "r": u"\033[91m",
-    "y": u"\033[93m",
-    "w": u"\033[97m",
-    "db": u"\033[34m",
-    "dc": u"\033[36m",
-    "dg": u"\033[32m",
-    "dm": u"\033[35m",
-    "dr": u"\033[31m",
-    "dy": u"\033[33m",
+COLOR_MAP: Dict[str, str] = {
+    "b": "\033[94m",
+    "c": "\033[96m",
+    "g": "\033[92m",
+    "m": "\033[95m",
+    "r": "\033[91m",
+    "y": "\033[93m",
+    "w": "\033[97m",
+    "db": "\033[34m",
+    "dc": "\033[36m",
+    "dg": "\033[32m",
+    "dm": "\033[35m",
+    "dr": "\033[31m",
+    "dy": "\033[33m",
 }
 
-COLOR_END = "\033[0m"
+COLOR_END: str = "\033[0m"
 # Assemble list of all color sequences
-ALL_SEQ = frozenset(
-    [x for x in COLOR_MAP.values()]
-    + [
-        COLOR_END,
-    ]
-)
+ALL_SEQ: FrozenSet[str] = frozenset([x for x in COLOR_MAP.values()] + [COLOR_END])
 
 
-def strip_color(value):
+def strip_color(value: str) -> str:
     """Strip all color values from a given string"""
     for seq in ALL_SEQ:
         value = value.replace(seq, "")
     return value
 
 
-class ColorStr(compat.text_type):
+class ColorStr(str):
     """Subclasses string to optionally include ascii color"""
 
     def __init__(self, *args, **kwargs):
-        super(ColorStr, self).__init__()
+        super().__init__()
 
     def __new__(cls, value, color, force_seq=None, *args, **kwargs):
         if cls.color_supported(force_seq=force_seq):
-            return compat.text_type.__new__(cls, u"{0}{1}{2}".format(color, value, COLOR_END))
-        return compat.text_type.__new__(cls, value)
+            return str.__new__(cls, f"{color}{value}{COLOR_END}")
+        return str.__new__(cls, value)
 
     @staticmethod
-    def color_supported(force_seq=None):
+    def color_supported(force_seq: Optional[bool] = None) -> bool:
         """Shoddy detection of color support."""
         # If True or False, override autodetection and return.
         if force_seq is False or force_seq is True:
