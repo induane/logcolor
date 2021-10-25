@@ -30,24 +30,7 @@ $ pip install log_color
 
 - Simple to use
 - No external dependencies
-- Compatibility with Python 2.7, Python 3.3+, PyPy
-
-NOTE: Python ``3.0``, ``3.1``, and ``3.2`` are not supported due to lack of
-support for  ``u""`` style format strings.
-
-## Makefile
-
-This project uses a Makefile for various tasks. Some of the available tasks
-are listed below.
-
-* `make clean` - Clean build artifacts out of your project
-* `make test` - Run Unit Tests (using nose & tox)
-* `make sdist` - Build a Python source distribution
-* `make wheel` - Build a Python wheel
-* `make docs` - Build the Sphinx documentation
-* `make publish` - publish any artifacts in dist/* using twine
-* `make format-code` - Format source code using ``black``
-* `make` - Equivalent to `make test format-code docs sdist rpm`
+- Compatibility with Python 3.6+, PyPy
 
 ## http://no-color.org/
 LogColor honors the ``NO_COLOR`` environment variable.
