@@ -1,3 +1,30 @@
 [build-system]
 requires = ["setuptools >= 40.6.0", "wheel", "build", "setuptools_scm"]
 build-backend = "setuptools.build_meta"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.setuptools_scm]
+root = "."
+
+[tool.vermin]
+setuptools_scm = true
+
+[tool.black]
+line-length = 120
+target-version = ['py36', 'py37', 'py38']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''

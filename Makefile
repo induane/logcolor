@@ -9,7 +9,7 @@ endif
 
 
 # Some distros need to use pip3 as the entrypoint
-ifneq (, $(shell which pip3))
+ifneq (, $(shell command -v pip3))
 PIP_CMD=pip3
 else ifneq (, $(shell which pip))
 PIP_CMD=pip
@@ -17,56 +17,80 @@ else
 $(error "Python's pip not found on $(PATH)")
 endif
 
+ifeq (, $(shell command -v pyre))
+$(warning "pyre not found on $(PATH).")
+endif
+
+.PHONY: all
 all: test format-code docs artifacts
 
 env: $(ENV_DIR)
 
-test: build check-code
+.PHONY: test
+test: build check-code mypy
 	$(IN_ENV) tox
 
+.PHONY: qt
 qt:
 	$(IN_ENV) python -m unittest discover --start-directory tests --verbose -b
 
+.PHONY: artifacts
 artifacts: build-reqs sdist wheel
 
 $(ENV_DIR):
 	virtualenv -p python3 $(ENV_DIR)
 
+.PHONY: build-reqs
 build-reqs: env
-	$(IN_ENV) $(PIP_CMD) install sphinx black coverage wheel twine tox build setuptools_scm
+	$(IN_ENV) $(PIP_CMD) install build
 
+.PHONY: build
 build: build-reqs
-	$(IN_ENV) $(PIP_CMD) install --editable .
+	$(IN_ENV) $(PIP_CMD) install --editable .[dev,docs]
 
+.PHONY: sdist
 sdist: build-reqs
-	$(IN_ENV) $(PYTHON) -m build --no-isolation --sdist
+	$(IN_ENV) $(PYTHON) -m build --sdist
 
+.PHONY: wheel
 wheel: build-reqs
-	$(IN_ENV) $(PYTHON) -m build --no-isolation --wheel
+	$(IN_ENV) $(PYTHON) -m build --wheel
 
+.PHONY: format-code
 format-code:
-	$(IN_ENV) black -l 119 src/ tests/ setup.py docs/source/conf.py
+	$(IN_ENV) black -l 119 src/ tests/ docs/source/conf.py
 
+.PHONY: check-code
 check-code:
-	$(IN_ENV) black --check -l 119 src/ tests/ setup.py docs/source/conf.py
+	$(IN_ENV) black --check -l 119 src/ tests/ docs/source/conf.py
 
+.PHONY: docs
 docs: build-reqs
-	$(IN_ENV) $(PIP_CMD) install -r docs/requirements.txt
 	$(IN_ENV) $(MAKE) -C docs html
 
+.PHONY: publish
 publish: artifacts
 	$(IN_ENV) twine upload dist/*
 
 # Static Analysis
-mypy:
-	$(IN_ENV) mypy --ignore-missing-imports src
 
+.PHONY: mypy
+mypy:
+	$(IN_ENV) mypy src/
+
+.PHONY: pyre
+pyre:
+	$(IN_ENV) pyre
+
+.PHONY: freeze
 freeze: env
 	- $(IN_ENV) pip freeze
 
+.PHONY: shell
 shell: env
 	- $(IN_ENV) $(PYTHON)
 
+.PHONY: clean
 clean:
 	- @rm -rf BUILD
 	- @rm -rf BUILDROOT
@@ -89,6 +113,7 @@ clean:
 	- @find . -name '*.pyo' -delete
 	- @find . -name '*__pycache__*' -delete
 
+.PHONY: env-clean
 env-clean: clean
 	- @rm -rf .env*
 	- @git clean -dfX
