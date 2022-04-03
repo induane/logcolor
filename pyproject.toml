@@ -1,9 +1,55 @@
 [build-system]
-requires = ["setuptools >= 40.6.0", "wheel", "build", "setuptools_scm"]
+requires = [
+    "setuptools>=61.2.0",
+    "wheel",
+    "build",
+    "setuptools_scm[toml]"
+]
 build-backend = "setuptools.build_meta"
 
-[tool.mypy]
-ignore_missing_imports = true
+[project]
+name = "log_color"
+description = "Simple log formatters for colored output"
+dynamic = ['version']
+authors = [
+    { "name" = "Brant Watson", "email" = "oldspiceap@gmail.com" },
+]
+license = {file = "LICENSE"}
+keywords = ["logging", "color", "formatter", ]
+readme = "README.md"
+classifiers = [
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">= 3.6.*"
+dependencies = []
+
+[project.urls]
+homepage = "https://github.com/induane/logcolor"
+documentation = "http://log-color.readthedocs.io/en/latest/"
+repository = "https://github.com/induane/logcolor"
+changelog = "https://github.com/induane/logcolor/blob/master/docs/source/changelog.rst"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "mypy",
+    "pyre-check",
+    "tox",
+    "twine",
+]
+docs = [
+  "sphinx",
+  "sphinx_rtd_theme",
+]
 
 [tool.setuptools_scm]
 root = "."
@@ -13,7 +59,7 @@ setuptools_scm = true
 
 [tool.black]
 line-length = 120
-target-version = ['py36', 'py37', 'py38']
+target-version = ['py36', 'py37', 'py38', 'py39']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -28,3 +74,49 @@ exclude = '''
   | dist
 )/
 '''
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_decorators = true
+disallow_untyped_defs = true
+# This warns if any returns get cast to 'Any' due to type uncertainty by mypy.
+# Since 'Any' is a valid return type for any function, returning any
+# from a str function would be valid. This causes it to raise a warning
+# instead.
+warn_return_any = true
+# This shows an error-code on failure, which is useful on debugging and possibly
+# ignoring those particular lines if need-be.
+show_error_codes = true
+# This warns us if we're using '# type ignore' on a function which
+# mypy knows it has definitions for. Hopefully this allows us to
+# phase in type-checks on more libraries.
+warn_unused_ignores = true
+# Enables PEP 420 style namespace packages. This is a complex topic,
+# but my reading suggests this is a generally 'good' idea.
+# so see: https://mypy.readthedocs.io/en/stable/config_file.html#confval-namespace_packages
+namespace_packages = true
+warn_redundant_casts = true
+# Remember that time you forgot to put a return in the function? This warns us of that.
+# i.e.,
+#
+# def foo() -> str:
+#     x = 'a' + 'x'
+# will return an error for not having the return it promised.
+warn_no_return = true
+# This attempts to warn us when we encounter code that is currently unreachable.
+warn_unreachable = true
+# Now for some configurations to improve our error messages
+# Attempts to make the output prettier for us mere mortals.
+pretty = true
+# This tries to show some additional context around where the error is occuring
+show_error_context = true
+# Mypy appears smart enough to ignore hidden directories. But it needs
+# to scan __pycache__ for .pyc and pyi files, so it cannot honor gitignore.
+exclude = [
+    '''^(?:.*\/)+[tT]ests?''',
+    'venv/',
+    'build/',
+    '.env_python3.8/',
+    '.env_python3/',
+
+]

@@ -7,18 +7,27 @@ else
 	IN_ENV=. $(ENV_DIR)/bin/activate &&
 endif
 
-
-# Some distros need to use pip3 as the entrypoint
-ifneq (, $(shell command -v pip3))
-PIP_CMD=pip3
-else ifneq (, $(shell which pip))
-PIP_CMD=pip
+ifeq ($(OS),Windows_NT)
+	IN_ENV=. $(ENV_DIR)/Scripts/activate &&
+	PYTHON_VERSION = $(shell . .env_python3/Scripts/activate && python pyver.py)
 else
-$(error "Python's pip not found on $(PATH)")
+	IN_ENV=. $(ENV_DIR)/bin/activate &&
+	PYTHON_VERSION = $(shell . .env_python3/bin/activate && python pyver.py)
 endif
+
+MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+MAKEFILE_DIR := $(patsubst %/,%,$(dir $(MAKEFILE_PATH)))
+
+PIP_WHL=dependencies/pip-22.0.3-py3-none-any.whl
+PIP_CMD=$(PYTHON) $(PIP_WHL)/pip
 
 ifeq (, $(shell command -v pyre))
 $(warning "pyre not found on $(PATH).")
+endif
+
+# Make sure virtualenv is present
+ifeq (, $(shell command -v virtualenv))
+$(error "virtualenv command not found in $(PATH)")
 endif
 
 .PHONY: all
@@ -47,6 +56,12 @@ build-reqs: env
 .PHONY: build
 build: build-reqs
 	$(IN_ENV) $(PIP_CMD) install --editable .[dev,docs]
+
+.PHONY: build
+build: env
+	$(IN_ENV) $(PIP_CMD) install .[dev,docs]
+	rm -rf $(ENV_DIR)/lib/$(PYTHON_VERSION)/site-packages/log_color
+	ln -s $(MAKEFILE_DIR)/src/log_color $(MAKEFILE_DIR)/$(ENV_DIR)/lib/$(PYTHON_VERSION)/site-packages/
 
 .PHONY: sdist
 sdist: build-reqs

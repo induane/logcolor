@@ -35,10 +35,7 @@ def strip_color(value: str) -> str:
 class ColorStr(str):
     """Subclasses string to optionally include ascii color"""
 
-    def __init__(self, *args, **kwargs):
-        super().__init__()
-
-    def __new__(cls, value, color, force_seq=None, *args, **kwargs):
+    def __new__(cls, value: str, color: str, force_seq: Optional[bool] = None) -> 'ColorStr':
         if cls.color_supported(force_seq=force_seq):
             return str.__new__(cls, f"{color}{value}{COLOR_END}")
         return str.__new__(cls, value)
