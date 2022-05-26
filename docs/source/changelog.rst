@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.1.0
+-----
+- Dropped setup.cfg entirely
+- Added ``pyre`` type checking
+- Added ``py.typed`` to package data
+- Fixed conf.py location in ``.readthedocs.yaml`` to fix documentation build issues
+
 1.0.8
 -----
 - Modernized build system and avoid invoking ``setup.py`` directly
