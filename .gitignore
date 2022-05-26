@@ -1,5 +1,6 @@
 .pyre/*
 .pyre_configuration
+.watchmanconfig
 .idea/*
 \#*\#
 *~

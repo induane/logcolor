@@ -1,6 +1,11 @@
 PYTHON=python3
 ENV_DIR=.env_$(PYTHON)
 
+define linebreak
+
+
+endef
+
 ifeq ($(OS),Windows_NT)
 	IN_ENV=. $(ENV_DIR)/Scripts/activate &&
 else
@@ -54,10 +59,6 @@ build-reqs: env
 	$(IN_ENV) $(PIP_CMD) install build
 
 .PHONY: build
-build: build-reqs
-	$(IN_ENV) $(PIP_CMD) install --editable .[dev,docs]
-
-.PHONY: build
 build: env
 	$(IN_ENV) $(PIP_CMD) install .[dev,docs]
 	rm -rf $(ENV_DIR)/lib/$(PYTHON_VERSION)/site-packages/log_color
@@ -93,8 +94,11 @@ publish: artifacts
 mypy:
 	$(IN_ENV) mypy src/
 
+.pyre_configuration:
+	$(error "$(linebreak)========================================$(linebreak)Missing PYRE configuration file!$(linebreak)========================================$(linebreak)You must initialize a pyre environment$(linebreak)Command:  pyre init$(linebreak)Select :  'n' for watchman$(linebreak)Select :  'src' for analysis directory$(linebreak)========================================$(linebreak)")
+
 .PHONY: pyre
-pyre:
+pyre: .pyre_configuration
 	$(IN_ENV) pyre
 
 .PHONY: freeze

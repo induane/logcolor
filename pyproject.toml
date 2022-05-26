@@ -28,6 +28,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
 ]
 requires-python = ">= 3.6.*"
 dependencies = []
@@ -37,6 +38,9 @@ homepage = "https://github.com/induane/logcolor"
 documentation = "http://log-color.readthedocs.io/en/latest/"
 repository = "https://github.com/induane/logcolor"
 changelog = "https://github.com/induane/logcolor/blob/master/docs/source/changelog.rst"
+
+[tool.setuptools.package-data]
+"log_color" = [ "py.typed",]
 
 [project.optional-dependencies]
 dev = [
