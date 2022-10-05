@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.0.0
+-----
+- Dropped support for Python 3.6 (due to setuptools incompatibility)
+- Added the ability to precompile some binaries using ``mypyc``
+- Added ``logcolor.lib`` module and moved some functionality there (hence major version number change)
+
 1.1.0
 -----
 - Dropped setup.cfg entirely
