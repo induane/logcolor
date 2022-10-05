@@ -62,11 +62,5 @@ class ColorFormatter(logging.Formatter):
                 replace_map.append((val, ColorStr(val[4:-1], COLOR_MAP[val[1:3]])))
             else:
                 replace_map.append((val, ColorStr(val[3:-1], COLOR_MAP[val[1]])))
-
-                # msg = msg.replace(val, ColorStr(val[4:-1], COLOR_MAP[val[1:3]]))
-            # else:
-            # msg = msg.replace(val, ColorStr(val[3:-1], COLOR_MAP[val[1]]))
-        # print(replace_map)
-        # raise Exception(tuple(repl))
         msg = multi_replace(msg, replace_map)
         return msg
