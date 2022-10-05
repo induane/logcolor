@@ -31,7 +31,7 @@ jobs:
           CIBW_PROJECT_REQUIRES_PYTHON: ${{ matrix.builds.python_requires }}
           CIBW_BUILD: "cp3*"
           PYTHON_MYPY_COMPILE: "true"
-        run: python -m cibuildwheel --output-dir wheelhouse
+        run: PYTHON_MYPY_COMPILE=true python -m cibuildwheel --output-dir wheelhouse
       - name: Publish compiled wheels
         env:
           TWINE_USERNAME: __token__
