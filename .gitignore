@@ -22,3 +22,5 @@ BUILDROOT
 .env_*
 .tox
 .env*
+wheelhouse
+wheelhouse/*

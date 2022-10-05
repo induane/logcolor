@@ -88,7 +88,7 @@ docs: build-reqs
 	$(IN_ENV) $(MAKE) -C docs html
 
 .PHONY: publish
-publish: artifacts
+publish:
 	$(IN_ENV) twine upload dist/*
 
 # Static Analysis
