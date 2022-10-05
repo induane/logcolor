@@ -30,7 +30,7 @@ $ pip install log_color
 
 - Simple to use
 - No external dependencies
-- Compatibility with Python 3.6+, PyPy
+- Compatibility with Python 3.7+, PyPy
 
 ## http://no-color.org/
 LogColor honors the ``NO_COLOR`` environment variable.
