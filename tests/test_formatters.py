@@ -1,11 +1,10 @@
-# Standard
 import logging
 from io import StringIO
 from unittest import TestCase
 
-# Project
-from log_color import colors
+from log_color.colors import ColorStr
 from log_color.formatters import ColorFormatter, ColorStripper
+from log_color.lib import COLOR_MAP
 
 
 class TestColorFormatter(TestCase):
@@ -24,7 +23,7 @@ class TestColorFormatter(TestCase):
     def test_format_matches(self):
         """Test format includes expected output on preformatted strings."""
         base_str = "blue"
-        blue_str = colors.ColorStr(base_str, colors.COLOR_MAP["b"])
+        blue_str = ColorStr(base_str, COLOR_MAP["b"])
         expected = f"INFO: this is {blue_str}\n"
         self.log.info(f"this is #b<{base_str}>")
         self.assertEqual(self.stream.getvalue(), expected)
@@ -32,7 +31,7 @@ class TestColorFormatter(TestCase):
     def test_format_matches_arg_manage(self):
         """Test format includes expected output when formatted with logger args."""
         base_str = "blue"
-        blue_str = colors.ColorStr(base_str, colors.COLOR_MAP["b"])
+        blue_str = ColorStr(base_str, COLOR_MAP["b"])
         expected = f"INFO: this is {blue_str}\n"
         self.log.info("this is #b<%s>", base_str)
         self.assertEqual(self.stream.getvalue(), expected)

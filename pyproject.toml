@@ -1,9 +1,10 @@
 [build-system]
 requires = [
-    "setuptools>=61.2.0",
-    "wheel",
     "build",
-    "setuptools_scm[toml]"
+    "mypy",
+    "setuptools >= 65.3.0",
+    "setuptools_scm[toml]",
+    "wheel",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -45,9 +46,9 @@ changelog = "https://github.com/induane/logcolor/blob/master/docs/source/changel
 [project.optional-dependencies]
 dev = [
     "black",
+    "isort",
     "mypy",
     "pyre-check",
-    "tox",
     "twine",
 ]
 docs = [
@@ -61,9 +62,13 @@ root = "."
 [tool.vermin]
 setuptools_scm = true
 
+[tool.isort]
+profile = "black"
+line_length = 120
+
 [tool.black]
 line-length = 120
-target-version = ['py36', 'py37', 'py38', 'py39']
+target-version = ['py36', 'py37', 'py38', 'py39', 'py310']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -83,44 +88,26 @@ exclude = '''
 check_untyped_defs = true
 disallow_untyped_decorators = true
 disallow_untyped_defs = true
-# This warns if any returns get cast to 'Any' due to type uncertainty by mypy.
-# Since 'Any' is a valid return type for any function, returning any
-# from a str function would be valid. This causes it to raise a warning
-# instead.
 warn_return_any = true
-# This shows an error-code on failure, which is useful on debugging and possibly
-# ignoring those particular lines if need-be.
 show_error_codes = true
-# This warns us if we're using '# type ignore' on a function which
-# mypy knows it has definitions for. Hopefully this allows us to
-# phase in type-checks on more libraries.
 warn_unused_ignores = true
-# Enables PEP 420 style namespace packages. This is a complex topic,
-# but my reading suggests this is a generally 'good' idea.
-# so see: https://mypy.readthedocs.io/en/stable/config_file.html#confval-namespace_packages
 namespace_packages = true
 warn_redundant_casts = true
-# Remember that time you forgot to put a return in the function? This warns us of that.
-# i.e.,
-#
-# def foo() -> str:
-#     x = 'a' + 'x'
-# will return an error for not having the return it promised.
 warn_no_return = true
-# This attempts to warn us when we encounter code that is currently unreachable.
 warn_unreachable = true
-# Now for some configurations to improve our error messages
-# Attempts to make the output prettier for us mere mortals.
 pretty = true
-# This tries to show some additional context around where the error is occuring
 show_error_context = true
-# Mypy appears smart enough to ignore hidden directories. But it needs
-# to scan __pycache__ for .pyc and pyi files, so it cannot honor gitignore.
+# Mypy ignores hidden directories but it needs scan __pycache__ for .pyc and pyi files, so it cannot honor gitignore.
 exclude = [
     '''^(?:.*\/)+[tT]ests?''',
     'venv/',
     'build/',
-    '.env_python3.8/',
     '.env_python3/',
-
+    '.env_python3.6/',
+    '.env_python3.7/',
+    '.env_python3.8/',
+    '.env_python3.9/',
+    '.env_python3.10/',
+    '.env_python3.11/',
+    '.env_python3.12/',
 ]

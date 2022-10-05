@@ -1,7 +1,5 @@
-# Standard
 from unittest import TestCase
 
-# Project
 from log_color import regex
 
 

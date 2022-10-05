@@ -1,4 +1,16 @@
-PYTHON=python3
+# Select Python 3.8, 3.9 or 3.10 (or error out)
+ifneq (, $(shell command -v python3.8))
+PYTHON=python3.8
+else ifneq (, $(shell command -v python3.9))
+PYTHON=python3.9
+else ifneq (, $(shell command -v python3.10))
+PYTHON=python3.10
+else ifneq (, $(shell command -v python3.11))
+PYTHON=python3.11
+else
+$(error "No Python version 3.6, 3.7, 3.8, 3.9 or 3.10 found on: $(PATH)")
+endif
+
 ENV_DIR=.env_$(PYTHON)
 
 define linebreak
@@ -12,18 +24,10 @@ else
 	IN_ENV=. $(ENV_DIR)/bin/activate &&
 endif
 
-ifeq ($(OS),Windows_NT)
-	IN_ENV=. $(ENV_DIR)/Scripts/activate &&
-	PYTHON_VERSION = $(shell . .env_python3/Scripts/activate && python pyver.py)
-else
-	IN_ENV=. $(ENV_DIR)/bin/activate &&
-	PYTHON_VERSION = $(shell . .env_python3/bin/activate && python pyver.py)
-endif
-
 MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MAKEFILE_DIR := $(patsubst %/,%,$(dir $(MAKEFILE_PATH)))
 
-PIP_WHL=dependencies/pip-22.0.3-py3-none-any.whl
+PIP_WHL=dependencies/pip-22.2.2-py3-none-any.whl
 PIP_CMD=$(PYTHON) $(PIP_WHL)/pip
 
 ifeq (, $(shell command -v pyre))
@@ -40,19 +44,18 @@ all: test format-code docs artifacts
 
 env: $(ENV_DIR)
 
-.PHONY: test
-test: build check-code mypy
-	$(IN_ENV) tox
-
 .PHONY: qt
 qt:
 	$(IN_ENV) python -m unittest discover --start-directory tests --verbose -b
+
+.PHONY: test
+test: build check-code mypy qt
 
 .PHONY: artifacts
 artifacts: build-reqs sdist wheel
 
 $(ENV_DIR):
-	virtualenv -p python3 $(ENV_DIR)
+	virtualenv -p $(PYTHON) $(ENV_DIR)
 
 .PHONY: build-reqs
 build-reqs: env
@@ -60,9 +63,7 @@ build-reqs: env
 
 .PHONY: build
 build: env
-	$(IN_ENV) $(PIP_CMD) install .[dev,docs]
-	rm -rf $(ENV_DIR)/lib/$(PYTHON_VERSION)/site-packages/log_color
-	ln -s $(MAKEFILE_DIR)/src/log_color $(MAKEFILE_DIR)/$(ENV_DIR)/lib/$(PYTHON_VERSION)/site-packages/
+	$(IN_ENV) $(PIP_CMD) install -e .[dev,docs]
 
 .PHONY: sdist
 sdist: build-reqs
@@ -74,11 +75,13 @@ wheel: build-reqs
 
 .PHONY: format-code
 format-code:
-	$(IN_ENV) black -l 119 src/ tests/ docs/source/conf.py
+	$(IN_ENV) black src/ tests/ docs/source/conf.py
+	$(IN_ENV) isort src/ tests/ docs/source/conf.py
 
 .PHONY: check-code
 check-code:
-	$(IN_ENV) black --check -l 119 src/ tests/ docs/source/conf.py
+	$(IN_ENV) black --check src/ tests/ docs/source/conf.py
+	$(IN_ENV) isort --check-only src/ tests/ docs/source/conf.py
 
 .PHONY: docs
 docs: build-reqs
