@@ -1,7 +1,10 @@
 # LogColor
-<a href="http://log-color.readthedocs.io/en/latest/"><img src="https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat"></a>
-<a href="https://pypi.python.org/pypi/log-color"><img src="https://img.shields.io/pypi/v/log_color.svg"></a>
+[![Stable Version](https://img.shields.io/pypi/v/log-color?color=blue)](https://pypi.org/project/log-color/)
+[![Documentation Status](https://readthedocs.org/projects/log-color/badge/?version=latest)](https://log-color.readthedocs.io/en/latest/?badge=latest)
+[![Downloads](https://img.shields.io/pypi/dm/log-color)](https://pypistats.org/packages/log-color)
 ![Test](https://github.com/induane/logcolor/actions/workflows/test.yml/badge.svg) ![Lint](https://github.com/induane/logcolor/actions/workflows/lint.yml/badge.svg)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 When making command line interfaces, it's often useful to colorize the output to emphasize salient pieces of
 information or otherwise enhance the user experience. Unfortunately it's quite cumbersome to add colorized outputs to
