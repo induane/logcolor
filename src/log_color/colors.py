@@ -23,9 +23,20 @@ class ColorStr(str):
         if force_seq is False or force_seq is True:
             return force_seq
 
+        environ_get = os.environ.get  # Stash this set of lookups
+
         # Honor NO_COLOR environment variable:
-        if os.environ.get("NO_COLOR", None):
+        if environ_get("NO_COLOR", None):
             return False
+
+        # Check CLICOLOR environment variable:
+        if environ_get("CLICOLOR", None) == "0":
+            return False
+
+        # Check CLICOLOR_FORCE environment variable:
+        CLICOLOR_FORCE = environ_get("CLICOLOR_FORCE", None)
+        if CLICOLOR_FORCE and CLICOLOR_FORCE != "0":
+            return True
 
         # Attempt simple autodetection
         if (hasattr(sys.stderr, "isatty") and sys.stderr.isatty()) or (
