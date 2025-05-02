@@ -1,14 +1,16 @@
-# Select Python 3.8, 3.9 or 3.10 (or error out)
-ifneq (, $(shell command -v python3.8))
-PYTHON=python3.8
-else ifneq (, $(shell command -v python3.9))
+# Select Python 3.9 or 3.10 (or error out)
+ifneq (, $(shell command -v python3.9))
 PYTHON=python3.9
 else ifneq (, $(shell command -v python3.10))
 PYTHON=python3.10
 else ifneq (, $(shell command -v python3.11))
 PYTHON=python3.11
+else ifneq (, $(shell command -v python3.12))
+PYTHON=python3.12
+else ifneq (, $(shell command -v python3.13))
+PYTHON=python3.13
 else
-$(error "No Python version 3.6, 3.7, 3.8, 3.9 or 3.10 found on: $(PATH)")
+$(error "No Python version 3.9, 3.10, 3.11, 3.12, or 3.13 found on: $(PATH)")
 endif
 
 ENV_DIR=.env_$(PYTHON)
@@ -30,15 +32,6 @@ MAKEFILE_DIR := $(patsubst %/,%,$(dir $(MAKEFILE_PATH)))
 PIP_WHL=dependencies/pip-22.2.2-py3-none-any.whl
 PIP_CMD=$(PYTHON) $(PIP_WHL)/pip
 
-ifeq (, $(shell command -v pyre))
-$(warning "pyre not found on $(PATH).")
-endif
-
-# Make sure virtualenv is present
-ifeq (, $(shell command -v virtualenv))
-$(error "virtualenv command not found in $(PATH)")
-endif
-
 .PHONY: all
 all: test format-code docs artifacts
 
@@ -55,7 +48,7 @@ test: build check-code mypy qt
 artifacts: build-reqs sdist wheel
 
 $(ENV_DIR):
-	virtualenv -p $(PYTHON) $(ENV_DIR)
+	$(PYTHON) -m venv $(ENV_DIR)
 
 .PHONY: build-reqs
 build-reqs: env
@@ -96,13 +89,6 @@ publish:
 .PHONY: mypy
 mypy:
 	$(IN_ENV) mypy src/
-
-.pyre_configuration:
-	$(error "$(linebreak)========================================$(linebreak)Missing PYRE configuration file!$(linebreak)========================================$(linebreak)You must initialize a pyre environment$(linebreak)Command:  pyre init$(linebreak)Select :  'n' for watchman$(linebreak)Select :  'src' for analysis directory$(linebreak)========================================$(linebreak)")
-
-.PHONY: pyre
-pyre: .pyre_configuration
-	$(IN_ENV) pyre
 
 .PHONY: freeze
 freeze: env
