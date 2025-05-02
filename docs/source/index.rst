@@ -10,8 +10,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   topics/introduction
    topics/usage
-   topics/development
    changelog
 
 Indices and tables

@@ -21,6 +21,5 @@ pygments_style = "sphinx"
 # HTML Settings
 # ----------------------------------------------------------------------------
 html_theme = "sphinx_rtd_theme"
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 html_show_copyright = True
 htmlhelp_basename = "logcolordoc"

@@ -41,7 +41,7 @@ Bad:
 
 ``LOG.debug("Foo {}".format(bar))``
 
-``LOG.debug(f"Foo {bar}")
+``LOG.debug(f"Foo {bar}")``
 
 Good:
 
@@ -154,7 +154,7 @@ Output Not Colorized
 There are a couple of things to check for:
 
 1. If you're running on Windows, colorized output is *not* supported.
-2. If you're in a *nix terminal and ANSI color codes are supported but you're not
+2. If you're in a posix terminal and ANSI color codes are supported but you're not
    seeing colorized output, check for the ``NO_COLOR`` environment variable. See
    `no-color.org <http://no-color.org/>`_ for more information on this standard. If the ``NO_COLOR`` environment
    variable is set, colorized output is automatically suppressed.
