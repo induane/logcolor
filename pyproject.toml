@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools >= 65.3.0", "setuptools_scm[toml]"]
+requires = ["setuptools >= 65.3.0", "setuptools_scm[toml]", "mypy>=1.17.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -14,7 +14,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -24,7 +23,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = []
 
 [project.urls]
@@ -37,7 +36,7 @@ changelog = "https://github.com/induane/logcolor/blob/master/docs/source/changel
 "log_color" = ["py.typed"]
 
 [dependency-groups]
-dev = ["ruff", "mypy", "pyre-check"]
+dev = ["ruff", "mypy>=1.17.1", "pyre-check"]
 docs = ["sphinx", "sphinx_rtd_theme"]
 
 [tool.setuptools_scm]
