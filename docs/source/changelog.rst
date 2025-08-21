@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.1.0
+-----
+- Migrated to UV for environment management
+- Simplified Makefile
+- Fixed cache syntax for older python releases
+
 2.0.0
 -----
 - Dropped support for Python 3.6 (due to setuptools incompatibility)
