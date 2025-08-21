@@ -3,8 +3,7 @@
 [![Documentation Status](https://readthedocs.org/projects/log-color/badge/?version=latest)](https://log-color.readthedocs.io/en/latest/?badge=latest)
 [![Downloads](https://img.shields.io/pypi/dm/log-color)](https://pypistats.org/packages/log-color)
 ![Test](https://github.com/induane/logcolor/actions/workflows/test.yml/badge.svg) ![Lint](https://github.com/induane/logcolor/actions/workflows/lint.yml/badge.svg)
-[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 
 When making command line interfaces, it's often useful to colorize the output to emphasize salient pieces of
 information or otherwise enhance the user experience. Unfortunately it's quite cumbersome to add colorized outputs to
@@ -37,3 +36,29 @@ $ pip install log_color
 
 ## http://no-color.org/
 LogColor honors the ``NO_COLOR`` environment variable.
+
+## Developer Setup
+
+This project uses [uv](https://docs.astral.sh/uv/ "UV Documentation") for dependency management, command running, etc... install it:
+
+```bash
+$ curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### Makefile
+
+If you're on Linux or OSX, there is a ``Makefile`` with a number of helpful targets:
+
+* ``make check-types`` Run ``mypy`` static code analysis tools
+* ``make format-code`` Runs the [ruff](https://beta.ruff.rs/docs/) code formatter
+* ``make check-code`` Validates no code formatting errors or import sorting errors (check only, makes no changes)
+* ``make wheel`` Build Python ``.whl`` file for distribution
+* ``make test`` Run the unittests
+* ``make docs`` Build the documentation
+* ``make freeze`` List all packages (and their version number) installed in the virtual environment
+* ``make shell`` Launch an interactive Python shell in the virtual environment context
+* ``make clean`` Remove any files that aren't part of the repo (build artifacts, test reports, etc...)
+* ``make git-clean`` Runs the git ``fsck`` tool, prunes the reflog, etc...
+
+**TIP:** *If you want to force a target to be re-evaluated (i.e. ``make env``) run make with the ``-B`` flag to force
+it to evaluate.*

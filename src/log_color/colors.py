@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 import platform
 import sys
@@ -8,9 +10,10 @@ from .lib import COLOR_END
 
 
 class ColorStr(str):
-    """Subclasses string to optionally include ascii color"""
+    """Subclasses string to optionally include ascii color."""
 
-    def __new__(cls, value: str, color: str, force_seq: Optional[bool] = None) -> "ColorStr":
+    def __new__(cls, value: str, color: str, force_seq: Optional[bool] = None) -> ColorStr:
+        """Create a new instance of the string, optionally including color sequences."""
         if cls.color_supported(force_seq=force_seq):
             return str.__new__(cls, f"{color}{value}{COLOR_END}")
         return str.__new__(cls, value)
@@ -34,8 +37,8 @@ class ColorStr(str):
             return False
 
         # Check CLICOLOR_FORCE environment variable:
-        CLICOLOR_FORCE = environ_get("CLICOLOR_FORCE", None)
-        if CLICOLOR_FORCE and CLICOLOR_FORCE != "0":
+        cli_color_force = environ_get("CLICOLOR_FORCE", None)
+        if cli_color_force and cli_color_force != "0":
             return True
 
         # Attempt simple autodetection

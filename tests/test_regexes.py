@@ -1,11 +1,15 @@
+from __future__ import annotations
+
 from unittest import TestCase
 
 from log_color import regex
 
 
 class TestRegexes(TestCase):
+    """Test the regular expressions to ensure they can match valid color codes."""
+
     def test_color_re(self):
-        """Test matching basic values"""
+        """Valid color codes can be matched with regular expressions."""
         good_vals = (
             "#m<magenta>",
             "#b<blue>",
@@ -28,13 +32,20 @@ class TestRegexes(TestCase):
             self.assertIsNone(regex.COLOR_EXP.match(bad_val))
 
     def test_color_extract(self):
-        """Make sure regular expression catches all instances on findall"""
+        """Regular expression catches all instances on findall."""
         text = (
             "This text has some very colourful words in it like: #m<magenta>, "
             " #b<blue>,  #g<green>,  #y<yellow>,  #c<cyan>, and #w<wh\nite>"
         )
         vals = regex.COLOR_EXP.findall(text)
 
-        for item in ("#m<magenta>", "#b<blue>", "#g<green>", "#y<yellow>", "#c<cyan>", "#w<wh\nite>"):
+        for item in (
+            "#m<magenta>",
+            "#b<blue>",
+            "#g<green>",
+            "#y<yellow>",
+            "#c<cyan>",
+            "#w<wh\nite>",
+        ):
             if item not in vals:
                 raise AssertionError(f"{item} was not detected")

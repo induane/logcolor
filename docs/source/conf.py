@@ -1,7 +1,7 @@
 # Standard
-import datetime
+from __future__ import annotations
 
-import sphinx_rtd_theme
+import datetime
 
 # ----------------------------------------------------------------------------
 # General Settings

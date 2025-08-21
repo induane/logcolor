@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 from io import StringIO
 from unittest import TestCase
@@ -21,7 +23,7 @@ class TestColorFormatter(TestCase):
         self.log.addHandler(self.handler)
 
     def test_format_matches(self):
-        """Test format includes expected output on preformatted strings."""
+        """Format includes expected output on preformatted strings."""
         base_str = "blue"
         blue_str = ColorStr(base_str, COLOR_MAP["b"])
         expected = f"INFO: this is {blue_str}\n"
@@ -29,7 +31,7 @@ class TestColorFormatter(TestCase):
         self.assertEqual(self.stream.getvalue(), expected)
 
     def test_format_matches_arg_manage(self):
-        """Test format includes expected output when formatted with logger args."""
+        """Format includes expected output when formatted with logger args."""
         base_str = "blue"
         blue_str = ColorStr(base_str, COLOR_MAP["b"])
         expected = f"INFO: this is {blue_str}\n"
@@ -37,7 +39,7 @@ class TestColorFormatter(TestCase):
         self.assertEqual(self.stream.getvalue(), expected)
 
     def test_format_object(self):
-        """Test formatting a non-string object."""
+        """Non-string objects can be formatted."""
         expected = "INFO: {}\n"
         self.log.info({})
         self.assertEqual(self.stream.getvalue(), expected)
@@ -57,7 +59,7 @@ class TestColorStripper(TestCase):
         self.log.addHandler(self.handler)
 
     def test_format_matches(self):
-        """Test format includes expected output."""
+        """Format includes expected output."""
         base_str = "blue"
         expected = f"INFO: this is {base_str}\n"
         self.log.info("\033[94mthis\033[0m is #b<%s>", base_str)

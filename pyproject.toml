@@ -1,38 +1,30 @@
 [build-system]
-requires = [
-    "build",
-    "mypy",
-    "setuptools >= 65.3.0",
-    "setuptools_scm[toml]",
-    "wheel",
-]
+requires = ["setuptools >= 65.3.0", "setuptools_scm[toml]"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "log_color"
-description = "Simple log formatters for colored output"
+description = "Simple log formatters for colored output."
 dynamic = ['version']
-authors = [
-    { "name" = "Brant Watson", "email" = "oldspiceap@gmail.com" },
-]
-license = {file = "LICENSE"}
-keywords = ["logging", "color", "formatter", ]
+authors = [{ "name" = "Brant Watson", "email" = "oldspiceap@gmail.com" }]
+license = { file = "LICENSE" }
+keywords = ["logging", "color", "formatter"]
 readme = "README.md"
 classifiers = [
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
-requires-python = ">=3.6"
+requires-python = ">=3.8"
 dependencies = []
 
 [project.urls]
@@ -42,20 +34,11 @@ repository = "https://github.com/induane/logcolor"
 changelog = "https://github.com/induane/logcolor/blob/master/docs/source/changelog.rst"
 
 [tool.setuptools.package-data]
-"log_color" = [ "py.typed",]
+"log_color" = ["py.typed"]
 
-[project.optional-dependencies]
-dev = [
-    "black",
-    "isort",
-    "mypy",
-    "pyre-check",
-    "twine",
-]
-docs = [
-  "sphinx",
-  "sphinx_rtd_theme",
-]
+[dependency-groups]
+dev = ["ruff", "mypy", "pyre-check"]
+docs = ["sphinx", "sphinx_rtd_theme"]
 
 [tool.setuptools_scm]
 root = "."
@@ -63,27 +46,56 @@ root = "."
 [tool.vermin]
 setuptools_scm = true
 
-[tool.isort]
-profile = "black"
-line_length = 120
-
-[tool.black]
+[tool.ruff]
 line-length = 120
-target-version = ['py37', 'py38', 'py39', 'py310', 'py311', 'py312']
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.hg
-  | \.mypy_cache
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
+exclude = ["*.pyi", "_version.py"]
+
+[tool.ruff.lint]
+select = [
+    "E", # Pycodestyle Errors
+    "W", # Pycodestyle Warnings
+    "F", # PyFlakes rules
+    "B", # Bugbear rules (likely bugs & design problems in your code)
+    "N", # Pep8 naming rules
+    "D", # Pydocstyle (rules for docstrings)
+    "I", # Import sorting
+]
+ignore = [
+    "D105", # Documenting every magic method is tedious and often redundant/self-explanatory
+    "D203", # D203 & D211 are incompatible; have to choose one or the other
+    "D212", # D212 and D213 are incompatible; D212 makes visual alignment weird
+    "N818", # Don't require exception subclass names to all end with 'Error'
+    "D104", # Don't require a docstring for every modulee __init__ file
+    "D107", # Don't require a docstring for every __init__ method
+    "D100", # Don't make all modules include a docstring
+]
+
+# Allow unused variables named "_".
+dummy-variable-rgx = "^_$"
+
+# Select the classes of fixable errors
+fixable = ["E", "F", "W", "N", "D", "I"]
+
+unfixable = [
+    "B",     # Avoid trying to fix flake8-bugbear (`B`) violations.
+    "UP013", # Don't rewrite TypedDict functions as classes
+]
+
+[tool.ruff.lint.isort]
+required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*" = [
+    "D101", # Relax some docstrings rules
+    "D102",
+    "N802", # Relax function name rules
+    "N806", # Relax class naming rules
+    "E501", # Long lines are par for the couse in Unitests
+    "N805", # Allow names other than "self" for instances methods
+    "B009", # Relax getattr rules
+    "B018", # Allow useless expressions (often used to assert calls raise exceptions)
+    "I002", # Don't require tests to use required imports
+]
 
 [tool.mypy]
 check_untyped_defs = true
@@ -99,16 +111,4 @@ warn_unreachable = true
 pretty = true
 show_error_context = true
 # Mypy ignores hidden directories but it needs scan __pycache__ for .pyc and pyi files, so it cannot honor gitignore.
-exclude = [
-    '''^(?:.*\/)+[tT]ests?''',
-    'venv/',
-    'build/',
-    '.env_python3/',
-    '.env_python3.6/',
-    '.env_python3.7/',
-    '.env_python3.8/',
-    '.env_python3.9/',
-    '.env_python3.10/',
-    '.env_python3.11/',
-    '.env_python3.12/',
-]
+exclude = ['''^(?:.*\/)+[tT]ests?''', 'venv/', 'build/', '.venv/']
