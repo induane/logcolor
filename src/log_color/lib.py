@@ -1,9 +1,10 @@
-import re
-from functools import lru_cache
-from typing import Dict, FrozenSet, List, Match, Sequence, Tuple
+from __future__ import annotations
 
-SUBMAP_TYPE = Sequence[Tuple[str, str]]
-"""Substitution mapping type."""
+import re
+from collections.abc import Sequence
+from functools import lru_cache
+from re import Match
+from typing import Dict, FrozenSet, List, Tuple
 
 COLOR_MAP: Dict[str, str] = {
     "b": "\033[94m",
@@ -35,7 +36,6 @@ class MultiReplace:
     replacing based on regular expressions.
 
     Keyword Arguments:
-
     :type regex: bool
     :param regex: Treat search keys as regular expressions [Default: False]
     :type flags: int
@@ -51,9 +51,10 @@ class MultiReplace:
         ))
         new = s.sub('The foo bar cat ate a bat')
         new == 'The zoo bar hat ate a kraken'
+
     """
 
-    def __init__(self, sub_map: SUBMAP_TYPE) -> None:
+    def __init__(self, sub_map: Sequence[Tuple[str, str]]) -> None:
         """Compile any regular expressions that have been passed."""
         self.group_map: Dict[str, str] = {}
         regex_values: List[str] = []
@@ -81,7 +82,7 @@ class MultiReplace:
             return text
 
 
-def multi_replace(text: str, sub_map: SUBMAP_TYPE) -> str:
+def multi_replace(text: str, sub_map: Sequence[Tuple[str, str]]) -> str:
     """
     Shortcut function to invoke MultiReplace in a single call.
 
@@ -100,9 +101,10 @@ def multi_replace(text: str, sub_map: SUBMAP_TYPE) -> str:
 
 @lru_cache(maxsize=None)
 def get_strip_map() -> Tuple[Tuple[str, str], ...]:
+    """Build (and cache) a map of sequences to strip."""
     return tuple((x, "") for x in ALL_SEQ)
 
 
 def strip_color(value: str) -> str:
-    """Strip all color values from a given string"""
+    """Strip all color values from a given string."""
     return multi_replace(value, get_strip_map())
