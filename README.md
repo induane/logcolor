@@ -1,9 +1,8 @@
 # LogColor
 [![Stable Version](https://img.shields.io/pypi/v/log-color?color=blue)](https://pypi.org/project/log-color/)
-[![Documentation Status](https://readthedocs.org/projects/log-color/badge/?version=latest)](https://log-color.readthedocs.io/en/latest/?badge=latest)
+[![Documentation](https://app.readthedocs.org/projects/log-color/badge/?version=latest)](https://log-color.readthedocs.io/latest/)
 [![Downloads](https://img.shields.io/pypi/dm/log-color)](https://pypistats.org/packages/log-color)
 ![Test](https://github.com/induane/logcolor/actions/workflows/test.yml/badge.svg) ![Lint](https://github.com/induane/logcolor/actions/workflows/lint.yml/badge.svg)
-
 
 When making command line interfaces, it's often useful to colorize the output to emphasize salient pieces of
 information or otherwise enhance the user experience. Unfortunately it's quite cumbersome to add colorized outputs to
