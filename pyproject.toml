@@ -37,7 +37,7 @@ changelog = "https://github.com/induane/logcolor/blob/master/docs/source/changel
 "log_color" = ["py.typed"]
 
 [dependency-groups]
-dev = ["ruff", "mypy", "pyre-check"]
+dev = ["ruff", "mypy", "pyre-check", "ty"]
 docs = ["sphinx", "sphinx_rtd_theme"]
 
 [tool.setuptools_scm]
