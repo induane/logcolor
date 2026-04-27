@@ -1,6 +1,14 @@
 Changelog
 =========
 
+2.2.0
+-----
+- Further simplified Makefile
+- Added context managers for improved testing ergonomics
+- Expanded test suite
+- Extended support and testing to newer Python releases (3.13, 3.14)
+- Minor performance improvements
+
 2.1.0
 -----
 - Migrated to UV for environment management
