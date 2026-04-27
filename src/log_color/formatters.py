@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from logging import LogRecord
-from typing import Dict, FrozenSet, List, Tuple
+from typing import List, Tuple
 
 from .colors import ColorStr
 from .lib import COLOR_MAP, multi_replace, strip_color
