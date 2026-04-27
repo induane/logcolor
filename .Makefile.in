@@ -1,0 +1,18 @@
+# This file contains definitions used by the Makefile; they are kept
+# separate here in order to make the Makefile easier to grok. Real
+# targets are kept in the Makefile.
+
+# Define a linebreak variable for use in info/warning/error messages
+define LINEBREAK
+
+
+endef
+
+MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+MAKEFILE_DIR := $(patsubst %/,%,$(dir $(MAKEFILE_PATH)))
+
+.DEFAULT_GOAL := help
+
+.PHONY: help
+help: ## Show this help
+	@grep -E -h '\s##\s' $(MAKEFILE_LIST) | grep --invert-match -E '.+?MAKEFILE_DIR.+' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
