@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 from logging import LogRecord
+from typing import Dict, FrozenSet, List, Tuple
 
 from .colors import ColorStr
 from .lib import COLOR_MAP, multi_replace, strip_color
@@ -20,11 +21,15 @@ class ColorStripper(logging.Formatter):
         """Format the message."""
         msg = super().format(record)
         msg = strip_color(msg)
+        replace_map: List[Tuple[str, str]] = []
+        replace_map_append = replace_map.append  # Avoid repeated attr lookups
         for val in COLOR_EXP.findall(msg):
             if val.startswith("#d"):
-                msg = msg.replace(val, val[4:-1])
+                replace_map_append((val, val[4:-1]))
             else:
-                msg = msg.replace(val, val[3:-1])
+                replace_map_append((val, val[3:-1]))
+        if replace_map:
+            msg = multi_replace(msg, replace_map)
         return msg
 
 
@@ -58,11 +63,12 @@ class ColorFormatter(logging.Formatter):
     def format(self, record: LogRecord) -> str:
         """Format the message."""
         msg = super().format(record)
-        replace_map = []
+        replace_map: List[Tuple[str, str]] = []
+        replace_map_append = replace_map.append  # Avoid repeated attr lookups
         for val in COLOR_EXP.findall(msg):
             if val.startswith("#d"):
-                replace_map.append((val, ColorStr(val[4:-1], COLOR_MAP[val[1:3]])))
+                replace_map_append((val, ColorStr(val[4:-1], COLOR_MAP[val[1:3]])))
             else:
-                replace_map.append((val, ColorStr(val[3:-1], COLOR_MAP[val[1]])))
+                replace_map_append((val, ColorStr(val[3:-1], COLOR_MAP[val[1]])))
         msg = multi_replace(msg, replace_map)
         return msg
