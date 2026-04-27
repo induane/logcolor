@@ -43,14 +43,16 @@ class MultiReplace:
 
     Usage::
 
-        from boltons import stringutils
-        s = stringutils.MultiReplace((
-            ('foo', 'zoo'),
-            ('cat', 'hat'),
-            ('bat', 'kraken)'
-        ))
-        new = s.sub('The foo bar cat ate a bat')
-        new == 'The zoo bar hat ate a kraken'
+        >>> from log_color.lib import MultiReplace
+        >>> s = MultiReplace(
+        ...     (
+        ...         ('foo', 'zoo'),
+        ...         ('cat', 'hat'),
+        ...         ('bat', 'kraken'),
+        ...    )
+        ... )
+        >>> s.sub('The foo bar cat ate a bat')
+        'The zoo bar hat ate a kraken'
 
     """
 
@@ -88,12 +90,16 @@ def multi_replace(text: str, sub_map: Sequence[Tuple[str, str]]) -> str:
 
     Example Usage::
 
-        from boltons.stringutils import multi_replace
-        new = multi_replace(
-            'The foo bar cat ate a bat',
-            {'foo': 'zoo', 'cat': 'hat', 'bat': 'kraken'}
-        )
-        new == 'The zoo bar hat ate a kraken'
+        >>> from log_color.lib import multi_replace
+        >>> multi_replace(
+        ...    'The foo bar cat ate a bat',
+        ...    (
+        ...        ('foo', 'zoo'),
+        ...        ('cat', 'hat'),
+        ...        ('bat', 'kraken'),
+        ...    )
+        ... )
+        'The zoo bar hat ate a kraken'
     """
     m = MultiReplace(sub_map)
     return m.sub(text)
