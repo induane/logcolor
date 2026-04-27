@@ -5,7 +5,18 @@ on:
     tags:
       - "*.*.*"
   workflow_dispatch:
-    branches: [main, master, support/1.0, support/1.1, support/2.0]
+    branches:
+      [
+        main,
+        master,
+        support/1.0,
+        support/1.1,
+        support/2.0,
+        support/2.1,
+        support/2.2,
+        support/2.3,
+        support/2.4,
+      ]
 
 jobs:
   mac-and-windows-and-linux-publish:
